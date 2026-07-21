@@ -1,5 +1,5 @@
 {
-  "name": "@aiql/react",
+  "name": "@aiql.io/react",
   "version": "0.1.0",
   "description": "React SDK for embedding AiQL components",
   "license": "MIT",

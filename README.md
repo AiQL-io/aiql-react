@@ -1,4 +1,4 @@
-# @aiql/react
+# @aiql.io/react
 
 React SDK for embedding AiQL **Canvas** (Brainstorm) and **Dashboard** (Analyze) tools via iframe.
 
@@ -7,7 +7,7 @@ The API key never reaches the browser. Your backend mints a short-lived workspac
 ## Install
 
 ```bash
-npm install @aiql/react
+npm install @aiql.io/react
 ```
 
 Peer dependencies: `react` and `react-dom` ≥ 18.
@@ -26,7 +26,7 @@ AIQL_WORKSPACE_ID=...
 **Next.js App Router** — `app/api/aiql/route.ts`:
 
 ```ts
-import { createNextHandler } from "@aiql/react/server";
+import { createNextHandler } from "@aiql.io/react/server";
 
 export const GET = createNextHandler();
 ```
@@ -34,7 +34,7 @@ export const GET = createNextHandler();
 **Express**:
 
 ```ts
-import { createExpressHandler } from "@aiql/react/server";
+import { createExpressHandler } from "@aiql.io/react/server";
 
 app.get("/api/aiql", createExpressHandler());
 ```
@@ -42,7 +42,7 @@ app.get("/api/aiql", createExpressHandler());
 **Any framework**:
 
 ```ts
-import { mintWorkspaceToken, handleTokenRequest } from "@aiql/react/server";
+import { mintWorkspaceToken, handleTokenRequest } from "@aiql.io/react/server";
 
 const { token, expiresAt } = await mintWorkspaceToken();
 // or
@@ -63,7 +63,7 @@ createNextHandler({
 ### 2. Fetch the token and render
 
 ```tsx
-import { AiqlProvider, Canvas, Dashboard, useToken } from "@aiql/react";
+import { AiqlProvider, Canvas, Dashboard, useToken } from "@aiql.io/react";
 
 function App() {
   const { token, status, error, reload } = useToken(); // GET /api/aiql
@@ -133,7 +133,7 @@ Also ensure your host origin is listed in `EMBED_ALLOWED_ORIGINS` on the AiQL ap
 
 | Import | Contents |
 |--------|----------|
-| `@aiql/react` | `AiqlProvider`, `useToken`, `useAiql`, `Canvas`, `Dashboard`, `Frame`, types |
-| `@aiql/react/server` | `createNextHandler`, `createExpressHandler`, `handleTokenRequest`, `mintWorkspaceToken` |
+| `@aiql.io/react` | `AiqlProvider`, `useToken`, `useAiql`, `Canvas`, `Dashboard`, `Frame`, types |
+| `@aiql.io/react/server` | `createNextHandler`, `createExpressHandler`, `handleTokenRequest`, `mintWorkspaceToken` |
 
 The `./server` entry is React-free and safe to use in Node/Next route handlers.
