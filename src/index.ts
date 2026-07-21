@@ -7,6 +7,10 @@ export { Canvas, type CanvasProps } from "./components/Canvas";
 export { Chat, type ChatProps } from "./components/Chat";
 export { Dashboard, type DashboardProps } from "./components/Dashboard";
 export {
+  KnowledgeGraph,
+  type KnowledgeGraphProps,
+} from "./components/KnowledgeGraph";
+export {
   AIQL_BASE_URL,
   DEFAULT_TOKEN_URL,
   MIN_REFRESH_MS,

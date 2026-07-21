@@ -1,6 +1,6 @@
 {
   "name": "@aiql.io/react",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "React SDK for embedding AiQL components",
   "license": "MIT",
   "author": {
