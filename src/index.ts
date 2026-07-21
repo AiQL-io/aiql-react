@@ -4,6 +4,7 @@ export { useToken } from "./hooks/useToken";
 export { useEmbedFrame } from "./hooks/useEmbedFrame";
 export { Frame, type FrameProps } from "./components/Frame";
 export { Canvas, type CanvasProps } from "./components/Canvas";
+export { Chat, type ChatProps } from "./components/Chat";
 export { Dashboard, type DashboardProps } from "./components/Dashboard";
 export {
   AIQL_BASE_URL,
