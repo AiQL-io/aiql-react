@@ -3,6 +3,18 @@
   "version": "0.1.0",
   "description": "React SDK for embedding AiQL components",
   "license": "MIT",
+  "author": {
+    "name": "AiQL",
+    "url": "https://aiql.io"
+  },
+  "homepage": "https://docs.aiql.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AiQL-io/aiql-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AiQL-io/aiql-react/issues"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
