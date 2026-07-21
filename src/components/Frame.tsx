@@ -3,11 +3,15 @@ import { useEffect, type CSSProperties, type ReactNode } from "react";
 import { useEmbedFrame } from "../hooks/useEmbedFrame";
 import type { AiqlTool } from "../types";
 
-const iframeResetStyle: CSSProperties = {
-  border: 0,
-  display: "block",
+const fillStyle: CSSProperties = {
   width: "100%",
   height: "100%",
+};
+
+const iframeResetStyle: CSSProperties = {
+  ...fillStyle,
+  border: 0,
+  display: "block",
 };
 
 export interface FrameProps {
@@ -44,7 +48,7 @@ export function Frame({
 
   if (error) {
     return (
-      <div className={className} style={style}>
+      <div className={className} style={{ ...fillStyle, ...style }}>
         {renderError ? renderError(error) : error}
       </div>
     );
@@ -52,14 +56,14 @@ export function Frame({
 
   if (!embedUrl) {
     return (
-      <div className={className} style={style}>
+      <div className={className} style={{ ...fillStyle, ...style }}>
         {renderLoading ? renderLoading() : null}
       </div>
     );
   }
 
   return (
-    <div className={className} style={style}>
+    <div className={className} style={{ ...fillStyle, ...style }}>
       {!frameReady && renderLoading ? renderLoading() : null}
       <iframe
         key={embedUrl}
