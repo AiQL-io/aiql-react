@@ -161,9 +161,7 @@ The `./server` entry is React-free and safe to use in Node/Next route handlers.
 
 ## Notes
 
-Ensure your host origin is listed in `EMBED_ALLOWED_ORIGINS` on the AiQL app so CSP `frame-ancestors` allows the iframe.
-
-Embed tokens are workspace-scoped (tool-agnostic). That contract requires matching support on `app.aiql.io`.
+`/embed/*` routes allow framing from any origin. Access is still gated by the embed JWT.
 
 ## Authors
 
