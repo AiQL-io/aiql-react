@@ -12,6 +12,8 @@ const iframeResetStyle: CSSProperties = {
   ...fillStyle,
   border: 0,
   display: "block",
+  width: "100%",
+  height: "100%",
 };
 
 export interface FrameProps {
