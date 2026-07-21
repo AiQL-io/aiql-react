@@ -1,5 +1,5 @@
 import { AIQL_BASE_URL } from "../constants";
-import type { AiqlPermission, MintOptions, MintResult } from "../types";
+import type { MintOptions, MintResult } from "../types";
 
 interface UpstreamTokenResponse {
   token?: string;
@@ -14,7 +14,6 @@ export async function mintWorkspaceToken(
 ): Promise<MintResult> {
   const apiKey = options.apiKey ?? process.env.AIQL_API_KEY;
   const workspaceId = options.workspaceId ?? process.env.AIQL_WORKSPACE_ID;
-  const permission: AiqlPermission = options.permission ?? "edit";
   const baseUrl = (options.baseUrl ?? AIQL_BASE_URL).replace(/\/$/, "");
 
   if (!apiKey) {
@@ -31,7 +30,6 @@ export async function mintWorkspaceToken(
 
   const body: Record<string, unknown> = {
     workspaceId,
-    permission,
   };
 
   if (typeof options.ttlSeconds === "number" && options.ttlSeconds > 0) {

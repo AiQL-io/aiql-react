@@ -1,4 +1,4 @@
-import type { AiqlPermission, AiqlTool, EmbedTokenClaims } from "../types";
+import type { EmbedTokenClaims } from "../types";
 
 function base64UrlDecode(input: string): string {
   const base64 = input.replace(/-/g, "+").replace(/_/g, "/");
@@ -26,26 +26,16 @@ export function decodeEmbedToken(token: string): EmbedTokenClaims | null {
 
     if (
       typeof payload.sub !== "string" ||
-      typeof payload.workspace_id !== "string" ||
-      typeof payload.permission !== "string"
+      typeof payload.workspace_id !== "string"
     ) {
       return null;
     }
 
-    const tool =
-      typeof payload.tool === "string"
-        ? (payload.tool as AiqlTool)
-        : payload.tool === null
-          ? null
-          : undefined;
-
     return {
       sub: payload.sub,
       workspace_id: payload.workspace_id,
-      tool,
       resource_id:
         typeof payload.resource_id === "string" ? payload.resource_id : null,
-      permission: payload.permission as AiqlPermission,
       exp: typeof payload.exp === "number" ? payload.exp : undefined,
     };
   } catch {

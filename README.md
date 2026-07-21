@@ -87,7 +87,6 @@ Optional overrides:
 createNextHandler({
   apiKey: "...",
   workspaceId: "...",
-  permission: "edit", // default
   ttlSeconds: 1800,
 });
 ```

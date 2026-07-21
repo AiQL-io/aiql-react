@@ -8,4 +8,4 @@ export {
   type TokenHandlerOptions,
   type TokenJsonResponse,
 } from "./handlers";
-export type { MintOptions, MintResult, AiqlPermission } from "../types";
+export type { MintOptions, MintResult } from "../types";

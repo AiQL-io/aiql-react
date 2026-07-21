@@ -12,7 +12,6 @@ export {
   REFRESH_BUFFER_MS,
 } from "./constants";
 export type {
-  AiqlPermission,
   AiqlTheme,
   AiqlTool,
   EmbedTokenClaims,
