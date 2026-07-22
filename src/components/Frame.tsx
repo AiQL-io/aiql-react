@@ -54,7 +54,6 @@ export function Frame({
     <>
       {!frameReady && renderLoading ? renderLoading() : null}
       <iframe
-        key={embedUrl}
         src={embedUrl}
         title={title}
         className={className}
