@@ -5,6 +5,14 @@
   </picture>
 </p>
 
+<p align="center">
+  <a href="https://github.com/AiQL-io/aiql-python">Python</a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/AiQL-io/aiql-typescript">TypeScript</a>
+  &nbsp;·&nbsp;
+  <b>React</b>
+</p>
+
 # AiQL React SDK
 
 The [AiQL React SDK](https://docs.aiql.io/sdks/react/overview) (`@aiql.io/react`) embeds AiQL Observatory tools — **Canvas** (Brainstorm) and **Dashboard** (Analyze) — in your React app via iframe. Your API key stays on the server. The browser only receives a short-lived workspace-scoped embed token.
