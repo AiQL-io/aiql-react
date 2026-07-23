@@ -1,4 +1,9 @@
-export type AiqlTool = "brainstorm" | "analyze" | "explore" | "knowledge";
+export type AiqlTool =
+  | "brainstorm"
+  | "analyze"
+  | "explore"
+  | "knowledge"
+  | "preview";
 
 export type AiqlTheme = "light" | "dark" | "auto";
 

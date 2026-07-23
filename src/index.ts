@@ -15,6 +15,7 @@ export {
   KnowledgeGraph,
   type KnowledgeGraphProps,
 } from "./components/KnowledgeGraph";
+export { Preview, type PreviewProps } from "./components/Preview";
 export {
   AIQL_BASE_URL,
   DEFAULT_TOKEN_URL,

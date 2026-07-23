@@ -8,6 +8,7 @@ import { useAiql } from "./useAiql";
 export interface UseEmbedFrameOptions {
   tool: AiqlTool;
   resourceId: string;
+  params?: Record<string, string | number | undefined>;
 }
 
 export interface UseEmbedFrameResult {
@@ -26,14 +27,29 @@ function isEmbedUrl(value: string): boolean {
   }
 }
 
+function appendParams(
+  url: string,
+  params?: Record<string, string | number | undefined>,
+): string {
+  if (!params) return url;
+
+  const parsed = new URL(url);
+  for (const [key, value] of Object.entries(params)) {
+    if (value === undefined || value === "") continue;
+    parsed.searchParams.set(key, String(value));
+  }
+  return parsed.toString();
+}
+
 function buildEmbedUrl(
   token: string,
   tool: AiqlTool,
   resourceId: string,
   baseUrl: string,
+  params?: Record<string, string | number | undefined>,
 ): string | null {
   if (isEmbedUrl(token)) {
-    return token;
+    return appendParams(token, params);
   }
 
   const claims = decodeEmbedToken(token);
@@ -41,23 +57,34 @@ function buildEmbedUrl(
     return null;
   }
 
-  return `${baseUrl}/embed/${claims.workspace_id}/${tool}/${resourceId}?token=${encodeURIComponent(token)}`;
+  const url = `${baseUrl}/embed/${claims.workspace_id}/${tool}/${resourceId}?token=${encodeURIComponent(token)}`;
+  return appendParams(url, params);
 }
 
 export function useEmbedFrame({
   tool,
   resourceId,
+  params,
 }: UseEmbedFrameOptions): UseEmbedFrameResult {
   const { token, theme, baseUrl } = useAiql();
   const [frameReady, setFrameReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const paramsKey = useMemo(() => {
+    if (!params) return "";
+    return Object.entries(params)
+      .filter(([, value]) => value !== undefined && value !== "")
+      .map(([key, value]) => `${key}=${value}`)
+      .sort()
+      .join("&");
+  }, [params]);
+
   const embedUrl = useMemo(() => {
     if (!token || !resourceId) return null;
-    const url = buildEmbedUrl(token, tool, resourceId, baseUrl);
+    const url = buildEmbedUrl(token, tool, resourceId, baseUrl, params);
     if (!url) return null;
     return withTheme(url, theme);
-  }, [token, tool, resourceId, theme, baseUrl]);
+  }, [token, tool, resourceId, theme, baseUrl, paramsKey]);
 
   useEffect(() => {
     if (!token) {

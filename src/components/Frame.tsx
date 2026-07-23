@@ -21,6 +21,7 @@ const iframeResetStyle: CSSProperties = {
 export interface FrameProps {
   tool: AiqlTool;
   resourceId: string;
+  params?: Record<string, string | number | undefined>;
   title?: string;
   className?: string;
   style?: CSSProperties;
@@ -43,6 +44,7 @@ function toEmbedPath(url: string): string | null {
 export function Frame({
   tool,
   resourceId,
+  params,
   title,
   className,
   style,
@@ -55,6 +57,7 @@ export function Frame({
   const { embedUrl, frameReady, setFrameReady, error } = useEmbedFrame({
     tool,
     resourceId,
+    params,
   });
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
