@@ -3,7 +3,8 @@ export type AiqlTool =
   | "analyze"
   | "explore"
   | "knowledge"
-  | "preview";
+  | "preview"
+  | "present";
 
 export type AiqlTheme = "light" | "dark" | "auto";
 

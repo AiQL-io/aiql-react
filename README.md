@@ -147,6 +147,10 @@ You can also mint the token some other way and pass it straight into `AiqlProvid
 |-----------|--------|
 | `Canvas` | `canvasId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `Dashboard` | `dashboardId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
+| `Chat` | `inquiryId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
+| `KnowledgeGraph` | `documentId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
+| `Preview` | `documentId`, `page?`, `chunkId?`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
+| `Presentation` | `presentationId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `Frame` | `tool`, `resourceId`, plus the same presentation props as above |
 
 `token` and `theme` always come from `AiqlProvider` context.
@@ -155,7 +159,7 @@ You can also mint the token some other way and pass it straight into `AiqlProvid
 
 | Import | Contents |
 |--------|----------|
-| `@aiql.io/react` | `AiqlProvider`, `useToken`, `useAiql`, `Canvas`, `Dashboard`, `Frame`, types |
+| `@aiql.io/react` | `AiqlProvider`, `useToken`, `useAiql`, `Canvas`, `Dashboard`, `Chat`, `KnowledgeGraph`, `Preview`, `Presentation`, `Frame`, types |
 | `@aiql.io/react/server` | `createNextHandler`, `createExpressHandler`, `handleTokenRequest`, `mintWorkspaceToken` |
 
 The `./server` entry is React-free and safe to use in Node/Next route handlers.

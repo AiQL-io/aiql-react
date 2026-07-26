@@ -17,6 +17,10 @@ export {
 } from "./components/KnowledgeGraph";
 export { Preview, type PreviewProps } from "./components/Preview";
 export {
+  Presentation,
+  type PresentationProps,
+} from "./components/Presentation";
+export {
   AIQL_BASE_URL,
   DEFAULT_TOKEN_URL,
   EMBED_MESSAGE,
