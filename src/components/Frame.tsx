@@ -20,7 +20,7 @@ const iframeResetStyle: CSSProperties = {
 
 export interface FrameProps {
   tool: AiqlTool;
-  resourceId: string;
+  resourceId?: string;
   params?: Record<string, string | number | undefined>;
   title?: string;
   className?: string;

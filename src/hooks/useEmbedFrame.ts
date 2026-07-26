@@ -7,7 +7,7 @@ import { useAiql } from "./useAiql";
 
 export interface UseEmbedFrameOptions {
   tool: AiqlTool;
-  resourceId: string;
+  resourceId?: string;
   params?: Record<string, string | number | undefined>;
 }
 
@@ -44,7 +44,7 @@ function appendParams(
 function buildEmbedUrl(
   token: string,
   tool: AiqlTool,
-  resourceId: string,
+  resourceId: string | undefined,
   baseUrl: string,
   params?: Record<string, string | number | undefined>,
 ): string | null {
@@ -57,7 +57,10 @@ function buildEmbedUrl(
     return null;
   }
 
-  const url = `${baseUrl}/embed/${claims.workspace_id}/${tool}/${resourceId}?token=${encodeURIComponent(token)}`;
+  const path = resourceId
+    ? `/embed/${claims.workspace_id}/${tool}/${resourceId}`
+    : `/embed/${claims.workspace_id}/${tool}`;
+  const url = `${baseUrl}${path}?token=${encodeURIComponent(token)}`;
   return appendParams(url, params);
 }
 
@@ -80,7 +83,7 @@ export function useEmbedFrame({
   }, [params]);
 
   const embedUrl = useMemo(() => {
-    if (!token || !resourceId) return null;
+    if (!token) return null;
     const url = buildEmbedUrl(token, tool, resourceId, baseUrl, params);
     if (!url) return null;
     return withTheme(url, theme);
@@ -92,18 +95,13 @@ export function useEmbedFrame({
       setError("Missing AiQL embed token.");
       return;
     }
-    if (!resourceId) {
-      setFrameReady(false);
-      setError("Missing resource id.");
-      return;
-    }
     if (!embedUrl) {
       setFrameReady(false);
       setError("Could not build embed URL from token.");
       return;
     }
     setError(null);
-  }, [token, resourceId, embedUrl]);
+  }, [token, embedUrl]);
 
   return {
     embedUrl,

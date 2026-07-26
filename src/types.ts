@@ -4,7 +4,8 @@ export type AiqlTool =
   | "explore"
   | "knowledge"
   | "preview"
-  | "present";
+  | "present"
+  | "common-knowledge";
 
 export type AiqlTheme = "light" | "dark" | "auto";
 

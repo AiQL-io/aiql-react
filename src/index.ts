@@ -15,6 +15,10 @@ export {
   KnowledgeGraph,
   type KnowledgeGraphProps,
 } from "./components/KnowledgeGraph";
+export {
+  CommonKnowledge,
+  type CommonKnowledgeProps,
+} from "./components/CommonKnowledge";
 export { Preview, type PreviewProps } from "./components/Preview";
 export {
   Presentation,
