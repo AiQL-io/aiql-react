@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 
+import type { ArtifactOpenEvent } from "../types";
 import { Frame } from "./Frame";
 
 export interface ChatProps {
@@ -7,6 +8,7 @@ export interface ChatProps {
   title?: string;
   className?: string;
   style?: CSSProperties;
+  onArtifactOpen?: (event: ArtifactOpenEvent) => void;
   onLoad?: () => void;
   onError?: (error: string) => void;
   renderLoading?: () => ReactNode;
@@ -18,6 +20,7 @@ export function Chat({
   title,
   className,
   style,
+  onArtifactOpen,
   onLoad,
   onError,
   renderLoading,
@@ -30,6 +33,7 @@ export function Chat({
       title={title}
       className={className}
       style={style}
+      onArtifactOpen={onArtifactOpen}
       onLoad={onLoad}
       onError={onError}
       renderLoading={renderLoading}

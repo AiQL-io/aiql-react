@@ -9,6 +9,20 @@ export type AiqlTool =
 
 export type AiqlTheme = "light" | "dark" | "auto";
 
+export type AiqlArtifactType =
+  | "canvas"
+  | "dashboard"
+  | "presentation"
+  | "inquiry"
+  | "document"
+  | "written-document";
+
+export interface ArtifactOpenEvent {
+  type: AiqlArtifactType;
+  id: string;
+  path: string;
+}
+
 export type TokenStatus = "idle" | "loading" | "ready" | "error";
 
 export interface EmbedTokenClaims {

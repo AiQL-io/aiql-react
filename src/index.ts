@@ -32,8 +32,10 @@ export {
   REFRESH_BUFFER_MS,
 } from "./constants";
 export type {
+  AiqlArtifactType,
   AiqlTheme,
   AiqlTool,
+  ArtifactOpenEvent,
   EmbedTokenClaims,
   TokenResult,
   TokenStatus,

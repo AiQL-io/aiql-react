@@ -7,9 +7,10 @@ import {
   type ReactNode,
 } from "react";
 
+import { useAiql } from "../hooks/useAiql";
 import { useEmbedFrame } from "../hooks/useEmbedFrame";
 import { useEmbedNavigator } from "../hooks/useEmbedNavigator";
-import type { AiqlTool } from "../types";
+import type { AiqlTool, ArtifactOpenEvent } from "../types";
 
 const iframeResetStyle: CSSProperties = {
   border: 0,
@@ -26,6 +27,7 @@ export interface FrameProps {
   className?: string;
   style?: CSSProperties;
   navigationMode?: "push" | "replace";
+  onArtifactOpen?: (event: ArtifactOpenEvent) => void;
   onLoad?: () => void;
   onError?: (error: string) => void;
   renderLoading?: () => ReactNode;
@@ -49,11 +51,15 @@ export function Frame({
   className,
   style,
   navigationMode = "replace",
+  onArtifactOpen,
   onLoad,
   onError,
   renderLoading,
   renderError,
 }: FrameProps) {
+  const { onArtifactOpen: providerOnArtifactOpen } = useAiql();
+  const handleArtifactOpen = onArtifactOpen ?? providerOnArtifactOpen;
+
   const { embedUrl, frameReady, setFrameReady, error } = useEmbedFrame({
     tool,
     resourceId,
@@ -81,6 +87,7 @@ export function Frame({
   const { isReady, navigate, reset } = useEmbedNavigator(
     iframeRef,
     embedOrigin,
+    handleArtifactOpen,
   );
 
   useEffect(() => {
