@@ -133,13 +133,49 @@ You can also mint the token some other way and pass it straight into `AiqlProvid
 ### Provider
 
 ```tsx
-<AiqlProvider token={token} theme="auto">
+<AiqlProvider
+  token={token}
+  theme="auto"
+  onArtifactOpen={(event) => {
+    // Route to your app's canvas / dashboard / presentation pages
+  }}
+>
   {children}
 </AiqlProvider>
 ```
 
 - `token` (required) — embed JWT (or a full embed URL)
 - `theme` (optional) — `"light"` | `"dark"` | `"auto"` (default `"auto"`)
+- `onArtifactOpen` (optional) — called when the user opens an artifact card inside any embed (canvas, dashboard, presentation, and related types). Prefer this over listening to `postMessage` yourself.
+
+### Artifact open events
+
+Inside `/embed/*`, clicking an artifact preview posts `ARTIFACT_OPEN` to the parent window instead of navigating away. The SDK validates origin/source and invokes `onArtifactOpen` with:
+
+```ts
+{
+  type: "canvas" | "dashboard" | "presentation" | "inquiry" | "document" | "written-document";
+  id: string;
+  path: string; // Observatory path from the iframe
+}
+```
+
+Example (Next.js):
+
+```tsx
+import { useRouter } from "next/navigation";
+import type { ArtifactOpenEvent } from "@aiql.io/react";
+
+const router = useRouter();
+
+function handleArtifactOpen(event: ArtifactOpenEvent) {
+  if (event.type === "canvas") router.push(`/brainstorm/${event.id}`);
+  if (event.type === "dashboard") router.push(`/analyze/${event.id}`);
+  if (event.type === "presentation") router.push(`/present/${event.id}`);
+}
+```
+
+Message constants live on `EMBED_MESSAGE` (`ARTIFACT_OPEN`, `EMBED_READY`, `NAVIGATE`, `PREFETCH`, `ROUTE_CHANGED`). See the [docs](https://docs.aiql.io/sdks/react/hooks/use-embed-navigator) for the full protocol.
 
 ### Components
 
@@ -147,14 +183,14 @@ You can also mint the token some other way and pass it straight into `AiqlProvid
 |-----------|--------|
 | `Canvas` | `canvasId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `Dashboard` | `dashboardId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
-| `Chat` | `inquiryId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
+| `Chat` | `inquiryId`, `title?`, `className?`, `style?`, `onArtifactOpen?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `KnowledgeGraph` | `documentId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `CommonKnowledge` | `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `Preview` | `documentId`, `page?`, `chunkId?`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `Presentation` | `presentationId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
-| `Frame` | `tool`, `resourceId?`, plus the same presentation props as above |
+| `Frame` | `tool`, `resourceId?`, `onArtifactOpen?`, plus the same presentation props as above |
 
-`token` and `theme` always come from `AiqlProvider` context.
+`token` and `theme` always come from `AiqlProvider` context. `onArtifactOpen` may be set on the provider (applies to all embeds) or on `Chat` / `Frame` (overrides for that iframe).
 
 ## Package exports
 
@@ -170,6 +206,7 @@ The `./server` entry is React-free and safe to use in Node/Next route handlers.
 - [React SDK overview](https://docs.aiql.io/sdks/react/overview)
 - [Components](https://docs.aiql.io/sdks/react/components/provider)
 - [Hooks](https://docs.aiql.io/sdks/react/hooks/use-token)
+- [Embed navigator / events](https://docs.aiql.io/sdks/react/hooks/use-embed-navigator)
 - [Server handlers](https://docs.aiql.io/sdks/react/server/handlers)
 
 ## Notes
