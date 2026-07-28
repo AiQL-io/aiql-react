@@ -192,6 +192,8 @@ Message constants live on `EMBED_MESSAGE` (`ARTIFACT_OPEN`, `EMBED_READY`, `NAVI
 
 `token` and `theme` always come from `AiqlProvider` context. `onArtifactOpen` may be set on the provider (applies to all embeds) or on `Chat` / `Frame` (overrides for that iframe).
 
+The iframe allows `clipboard-write` and `fullscreen`. Presentation embeds use design-system webfonts from AiQL and support **Present** mode (keyboard-driven slide player). See the [Presentation docs](https://docs.aiql.io/sdks/react/components/presentation).
+
 ## Package exports
 
 | Import | Contents |
