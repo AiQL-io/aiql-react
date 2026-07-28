@@ -136,7 +136,7 @@ export function Frame({
         className={className}
         width="100%"
         height="100%"
-        allow="clipboard-write"
+        allow="clipboard-write; fullscreen"
         style={{ ...iframeResetStyle, ...style }}
         onLoad={() => {
           setFrameReady(true);
