@@ -188,11 +188,11 @@ Message constants live on `EMBED_MESSAGE` (`ARTIFACT_OPEN`, `EMBED_READY`, `NAVI
 | `CommonKnowledge` | `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `Preview` | `documentId`, `page?`, `chunkId?`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `Presentation` | `presentationId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
-| `Frame` | `tool`, `resourceId?`, `onArtifactOpen?`, plus the same presentation props as above |
+| `Frame` | `tool`, `resourceId?`, `allow?`, `onArtifactOpen?`, plus the same presentation props as above |
 
 `token` and `theme` always come from `AiqlProvider` context. `onArtifactOpen` may be set on the provider (applies to all embeds) or on `Chat` / `Frame` (overrides for that iframe).
 
-The iframe allows `clipboard-write` and `fullscreen`. Presentation embeds use design-system webfonts from AiQL and support **Present** mode (keyboard-driven slide player). See the [Presentation docs](https://docs.aiql.io/sdks/react/components/presentation).
+The iframe allows `clipboard-write`, `fullscreen`, `microphone`, and `autoplay`; `microphone` and `autoplay` are what let dictation and voice calls work inside the embed. Override the whole list with the `allow` prop on `Frame`. Presentation embeds use design-system webfonts from AiQL and support **Present** mode (keyboard-driven slide player). See the [Presentation docs](https://docs.aiql.io/sdks/react/components/presentation).
 
 ## Package exports
 

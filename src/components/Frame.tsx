@@ -19,6 +19,8 @@ const iframeResetStyle: CSSProperties = {
   height: "100%",
 };
 
+const DEFAULT_ALLOW = "clipboard-write; fullscreen; microphone; autoplay";
+
 export interface FrameProps {
   tool: AiqlTool;
   resourceId?: string;
@@ -26,6 +28,7 @@ export interface FrameProps {
   title?: string;
   className?: string;
   style?: CSSProperties;
+  allow?: string;
   navigationMode?: "push" | "replace";
   onArtifactOpen?: (event: ArtifactOpenEvent) => void;
   onLoad?: () => void;
@@ -50,6 +53,7 @@ export function Frame({
   title,
   className,
   style,
+  allow = DEFAULT_ALLOW,
   navigationMode = "replace",
   onArtifactOpen,
   onLoad,
@@ -136,7 +140,7 @@ export function Frame({
         className={className}
         width="100%"
         height="100%"
-        allow="clipboard-write; fullscreen"
+        allow={allow}
         style={{ ...iframeResetStyle, ...style }}
         onLoad={() => {
           setFrameReady(true);
