@@ -1,5 +1,7 @@
 import {
+  forwardRef,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -21,6 +23,10 @@ const iframeResetStyle: CSSProperties = {
 
 const DEFAULT_ALLOW = "clipboard-write; fullscreen; microphone; autoplay";
 
+export interface EmbedChatHandle {
+  sendMessage: (text: string) => void;
+}
+
 export interface FrameProps {
   tool: AiqlTool;
   resourceId?: string;
@@ -31,6 +37,7 @@ export interface FrameProps {
   allow?: string;
   navigationMode?: "push" | "replace";
   onArtifactOpen?: (event: ArtifactOpenEvent) => void;
+  onReady?: () => void;
   onLoad?: () => void;
   onError?: (error: string) => void;
   renderLoading?: () => ReactNode;
@@ -46,21 +53,25 @@ function toEmbedPath(url: string): string | null {
   }
 }
 
-export function Frame({
-  tool,
-  resourceId,
-  params,
-  title,
-  className,
-  style,
-  allow = DEFAULT_ALLOW,
-  navigationMode = "replace",
-  onArtifactOpen,
-  onLoad,
-  onError,
-  renderLoading,
-  renderError,
-}: FrameProps) {
+export const Frame = forwardRef<EmbedChatHandle, FrameProps>(function Frame(
+  {
+    tool,
+    resourceId,
+    params,
+    title,
+    className,
+    style,
+    allow = DEFAULT_ALLOW,
+    navigationMode = "replace",
+    onArtifactOpen,
+    onReady,
+    onLoad,
+    onError,
+    renderLoading,
+    renderError,
+  },
+  ref,
+) {
   const { onArtifactOpen: providerOnArtifactOpen } = useAiql();
   const handleArtifactOpen = onArtifactOpen ?? providerOnArtifactOpen;
 
@@ -88,11 +99,27 @@ export function Frame({
     }
   }, [iframeSrc]);
 
-  const { isReady, navigate, reset } = useEmbedNavigator(
+  const { isReady, navigate, reset, sendMessage } = useEmbedNavigator(
     iframeRef,
     embedOrigin,
     handleArtifactOpen,
   );
+
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
+  const announcedReadyRef = useRef(false);
+
+  useImperativeHandle(ref, () => ({ sendMessage }), [sendMessage]);
+
+  useEffect(() => {
+    if (!isReady) {
+      announcedReadyRef.current = false;
+      return;
+    }
+    if (announcedReadyRef.current) return;
+    announcedReadyRef.current = true;
+    onReadyRef.current?.();
+  }, [isReady]);
 
   useEffect(() => {
     if (error) onError?.(error);
@@ -149,4 +176,4 @@ export function Frame({
       />
     </>
   );
-}
+});

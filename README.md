@@ -175,20 +175,22 @@ function handleArtifactOpen(event: ArtifactOpenEvent) {
 }
 ```
 
-Message constants live on `EMBED_MESSAGE` (`ARTIFACT_OPEN`, `EMBED_READY`, `NAVIGATE`, `PREFETCH`, `ROUTE_CHANGED`). See the [docs](https://docs.aiql.io/sdks/react/hooks/use-embed-navigator) for the full protocol.
+Message constants live on `EMBED_MESSAGE` (`ARTIFACT_OPEN`, `EMBED_READY`, `NAVIGATE`, `PREFETCH`, `ROUTE_CHANGED`, `SEND_MESSAGE`). See the [docs](https://docs.aiql.io/sdks/react/hooks/use-embed-navigator) for the full protocol.
+
+`Chat`, `Canvas`, and `Dashboard` accept `onReady` and a ref with `sendMessage(text)`. Call it from `onReady` to start a conversation. The embed keeps the text until its chat can send, then starts the run.
 
 ### Components
 
 | Component | Props |
 |-----------|--------|
-| `Canvas` | `canvasId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
-| `Dashboard` | `dashboardId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
-| `Chat` | `inquiryId`, `title?`, `className?`, `style?`, `onArtifactOpen?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
+| `Canvas` | `canvasId`, `title?`, `className?`, `style?`, `onReady?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?`, ref `sendMessage` |
+| `Dashboard` | `dashboardId`, `title?`, `className?`, `style?`, `onReady?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?`, ref `sendMessage` |
+| `Chat` | `inquiryId`, `title?`, `className?`, `style?`, `onArtifactOpen?`, `onReady?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?`, ref `sendMessage` |
 | `KnowledgeGraph` | `documentId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `CommonKnowledge` | `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `Preview` | `documentId`, `page?`, `chunkId?`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
 | `Presentation` | `presentationId`, `title?`, `className?`, `style?`, `onLoad?`, `onError?`, `renderLoading?`, `renderError?` |
-| `Frame` | `tool`, `resourceId?`, `allow?`, `onArtifactOpen?`, plus the same presentation props as above |
+| `Frame` | `tool`, `resourceId?`, `allow?`, `onArtifactOpen?`, `onReady?`, ref `sendMessage`, plus the same presentation props as above |
 
 `token` and `theme` always come from `AiqlProvider` context. `onArtifactOpen` may be set on the provider (applies to all embeds) or on `Chat` / `Frame` (overrides for that iframe).
 

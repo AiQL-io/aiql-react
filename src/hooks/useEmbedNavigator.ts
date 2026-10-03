@@ -17,12 +17,14 @@ export interface EmbedNavigator {
   isReady: boolean;
   navigate: (path: string, options?: NavigateOptions) => void;
   prefetch: (path: string) => void;
+  sendMessage: (text: string) => void;
   reset: () => void;
 }
 
 type EmbedOutboundMessage =
   | { type: typeof EMBED_MESSAGE.NAVIGATE; path: string; replace: boolean }
-  | { type: typeof EMBED_MESSAGE.PREFETCH; path: string };
+  | { type: typeof EMBED_MESSAGE.PREFETCH; path: string }
+  | { type: typeof EMBED_MESSAGE.SEND_MESSAGE; text: string };
 
 const ARTIFACT_TYPES = new Set<AiqlArtifactType>([
   "canvas",
@@ -137,11 +139,20 @@ export function useEmbedNavigator(
     [send],
   );
 
+  const sendMessage = useCallback(
+    (text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed) return;
+      send({ type: EMBED_MESSAGE.SEND_MESSAGE, text: trimmed });
+    },
+    [send],
+  );
+
   const reset = useCallback(() => {
     readyRef.current = false;
     setIsReady(false);
     queueRef.current = [];
   }, []);
 
-  return { isReady, navigate, prefetch, reset };
+  return { isReady, navigate, prefetch, sendMessage, reset };
 }
